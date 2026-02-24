@@ -8,7 +8,12 @@ const SignUp = lazy(() => import('../pages/SignUp/SignUp'))
 const PasswordReset = lazy(() => import('../pages/PasswordReset/PasswordReset'))
 const About = lazy(() => import('../pages/About'))
 const Home = lazy(() => import('../pages/Home/Home'))
-const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount')) 
+const MyAccount = lazy(() => import('../pages/MyAccount/MyAccount'))
+const Users = lazy(() => import('../pages/Users/Users'))
+const Dashboard = lazy(() => import('../pages/Dashboard/Dashboard'))
+const TrendsPage = lazy(() => import('../pages/Dashboard/TrendsPage'))
+const AlarmPage = lazy(() => import('../pages/Dashboard/AlarmPage'))
+const LogPage = lazy(() => import('../pages/Dashboard/LogPage')) 
 
 /* const DialogDemo = lazy(() => import('../pages/DialogDemo/DialogDemo'))
 const ToastDemo = lazy(() => import('../pages/ToastDemo/ToastDemo'))
@@ -60,11 +65,56 @@ const routes = [
     ),
   },
   {
+    path: '/users',
+    exact: true,
+    element: (
+      <AuthorizedRoute>
+        <Users />
+      </AuthorizedRoute>
+    ),
+  },
+  {
+    path: '/dashboard',
+    exact: true,
+    element: (
+      <AuthorizedRoute>
+        <Dashboard />
+      </AuthorizedRoute>
+    ),
+  },
+  {
     path: '/home',
     exact: true,
     element: (
       <AuthorizedRoute>
         <Home />
+      </AuthorizedRoute>
+    ),
+  },
+  {
+    path: '/trends',
+    exact: true,
+    element: (
+      <AuthorizedRoute>
+        <TrendsPage />
+      </AuthorizedRoute>
+    ),
+  },
+  {
+    path: '/alarm',
+    exact: true,
+    element: (
+      <AuthorizedRoute>
+        <AlarmPage />
+      </AuthorizedRoute>
+    ),
+  },
+  {
+    path: '/log',
+    exact: true,
+    element: (
+      <AuthorizedRoute>
+        <LogPage />
       </AuthorizedRoute>
     ),
   },

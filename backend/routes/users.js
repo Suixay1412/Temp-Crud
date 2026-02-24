@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
-const userInit = (dbase, privateKey) => {
+const userInit = (dbase, privateKey, createPassword) => {
     
   router.post('/login', (req, res) => {
 
@@ -110,6 +110,79 @@ const userInit = (dbase, privateKey) => {
       });
     }
 
+  });
+
+  router.get('/all', passport.authenticate('jwt', { session: false }), (req, res) => {
+    console.log('/all users');
+
+    dbase.readDocument({
+      collection: 'User',
+      query: JSON.stringify({}),
+    }, (err, resp) => {
+      console.log(err, resp);
+
+      if (resp) return res.json(JSON.parse(resp.data));
+      else return res.json([]);
+    });
+  });
+
+  router.post('/create', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+      console.log('/create user ->', req.body);
+      const userData = req.body.data;
+      if (userData.password) userData.password = await createPassword(userData.password);
+      dbase.createDocument({
+        collection: 'User',
+        data: JSON.stringify(userData),
+      }, (err, resp) => {
+        console.log(err, resp);
+        if (err) return res.status(500).json({ error: 'Database error', details: err });
+        if (resp) return res.json(JSON.parse(resp.data));
+        else return res.status(500).json({ error: 'Unknown error' });
+      });
+    } catch (e) {
+      console.error('Create user error:', e);
+      return res.status(500).json({ error: 'Server error', details: e.message });
+    }
+  });
+
+  router.post('/update', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+      console.log('/update user ->', req.body);
+      const userData = req.body.data;
+      if (userData.password) userData.password = await createPassword(userData.password);
+      dbase.updateDocument({
+        collection: 'User',
+        query: JSON.stringify({ _id: userData._id }),
+        data: JSON.stringify(userData),
+      }, (err, resp) => {
+        console.log(err, resp);
+        if (err) return res.status(500).json({ error: 'Database error', details: err });
+        if (resp) return res.json(JSON.parse(resp.data));
+        else return res.status(500).json({ error: 'Unknown error' });
+      });
+    } catch (e) {
+      console.error('Update user error:', e);
+      return res.status(500).json({ error: 'Server error', details: e.message });
+    }
+  });
+
+  router.post('/delete', passport.authenticate('jwt', { session: false }), async (req, res) => {
+    try {
+      console.log('/delete user ->', req.body);
+      dbase.deleteDocument({
+        collection: 'User',
+        query: JSON.stringify({ _id: req.body._id }),
+      }, (err, resp) => {
+        console.log(err, resp);
+        if (err) return res.status(500).json({ error: 'Database error', details: err });
+        if (resp) return res.json(JSON.parse(resp.data));
+        else return res.status(500).json({ error: 'Unknown error' });
+      });
+    } catch (e) {
+      console.error('Delete user error:', e);
+      return res.status(500).json({ error: 'Server error', details: e.message });
+    }
   });
 
 }

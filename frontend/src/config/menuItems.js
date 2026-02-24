@@ -5,6 +5,9 @@ import {
   ChromeReaderMode,
   Dashboard as DashboardIcon,
   ExitToApp as ExitToAppIcon,
+  TrendingUp as TrendsIcon,
+  Notifications as AlarmIcon,
+  Description as LogIcon,
   /* FilterList, */
   /* FormatTextdirectionRToL as RTLIcon,
   FormatTextdirectionLToR as LTRIcon, */
@@ -16,6 +19,7 @@ import {
   /* QuestionAnswer, */
   SettingsApplications as SettingsIcon,
   Style as StyleIcon,
+  People as PeopleIcon,
   /* Tab,
   ViewList,
   Web, */
@@ -97,10 +101,40 @@ const getMenuItems = (props) => {
   }
   return [
     {
+      value: '/dashboard',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'dashboard', defaultMessage: 'Dashboard' }),
+      leftIcon: <DashboardIcon />,
+    },
+    {
       value: '/home',
       visible: isAuthorised,
       primaryText: intl.formatMessage({ id: 'home' }),
       leftIcon: <DashboardIcon />,
+    },
+    {
+      value: '/trends',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'trends', defaultMessage: 'Trends' }),
+      leftIcon: <TrendsIcon />,
+    },
+    {
+      value: '/alarm',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'alarm', defaultMessage: 'Alarm' }),
+      leftIcon: <AlarmIcon />,
+    },
+    {
+      value: '/log',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'log', defaultMessage: 'Log' }),
+      leftIcon: <LogIcon />,
+    },
+    {
+      value: '/users',
+      visible: isAuthorised,
+      primaryText: intl.formatMessage({ id: 'users', defaultMessage: 'Users' }),
+      leftIcon: <PeopleIcon />,
     },
     /* {
       primaryText: intl.formatMessage({ id: 'demos', defaultMessage: 'Demos' }),

@@ -49,7 +49,7 @@ async function main () {
   require('./libs/passport')(passport, dbase, privateKey)
 
   const users = require('./routes/users').router;
-  require('./routes/users').userInit(dbase, privateKey ); 
+  require('./routes/users').userInit(dbase, privateKey, createPassword); 
 
   /* Since express 4.16.0, you can also do: */
   app.use(express.json({ limit: '50mb' }));
