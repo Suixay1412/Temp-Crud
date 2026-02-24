@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Button, Typography } from '@mui/material'
 
 const LandingPage = () => {
   return (
@@ -16,12 +17,31 @@ const LandingPage = () => {
         flexDirection: 'column',
       }}
     >
-      <h2>Cool Landing Page</h2>
+      <Typography variant="h2" color="primary" gutterBottom>
+        Logicgard Web Landing Kit
+      </Typography>
 
-      <div>
-        <Link to="/home">Home</Link>
-      </div>
+      <Typography variant="h5" sx={{ color: '#DC143C' }} gutterBottom>
+        ชุดการเรียนรู้การทำงานของ logic gard
+      </Typography>
+
+      <Button
+        size="large"
+        sx={{
+          mt: 4,
+          borderRadius: '40px',
+          fontWeight: 'bold',
+          px: 4,
+        }}
+        variant="contained"
+        color="inherit"
+        component={Link}
+        to="/home"
+      >
+        Get Started
+      </Button>
     </div>
   )
 }
+
 export default LandingPage
